@@ -2,6 +2,8 @@
 
 This is a responsive and feature-rich Blogger template designed for the DXN Cadiz Service Center. It includes a powerful product search, a contact form, a Google Map, and sections for popular products and categories.
 
+**Note on Dummy Data:** This template file contains hardcoded dummy product data. This allows you to open the `template.xml` file directly in a web browser for a visual preview of the layout. This dummy data will be replaced by your actual blog posts once you upload and apply the theme to your Blogger site.
+
 ## Installation
 
 1.  Download the `template.xml` file.

@@ -5,7 +5,7 @@
   <meta charset='UTF-8'/>
   <meta content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport'/>
   <title><data:blog.pageTitle/></title>
-  <b:skin><style type='text/css'><![CDATA[
+  <b:skin><![CDATA[
     /* General Styles */
     body {
       font-family: Arial, sans-serif;
@@ -139,7 +139,7 @@
       color: #ffffff; /* White */
       cursor: pointer;
     }
-  ]]></style></b:skin>
+  ]]></b:skin>
 </head>
 <body>
   <!-- Header -->
@@ -189,7 +189,24 @@
         <b:section class='main' id='popular-products' showaddelement='yes'>
           <b:widget id='HTML1' locked='false' title='Popular Products' type='HTML'>
             <b:includable id='main'>
-              <div id='popular-posts-container' class='product-grid'></div>
+              <div id='popular-posts-container' class='product-grid'>
+                <!-- Dummy Data for Local Preview -->
+                <div class='product-item'>
+                  <a href='#'>
+                    <img src='https://via.placeholder.com/250x250.png?text=Popular+1'/>
+                    <h3>Popular Product 1</h3>
+                    <div class="price">$35.00</div>
+                  </a>
+                </div>
+                <div class='product-item'>
+                  <a href='#'>
+                    <img src='https://via.placeholder.com/250x250.png?text=Popular+2'/>
+                    <h3>Popular Product 2</h3>
+                    <div class="price">$42.99</div>
+                  </a>
+                </div>
+                <!-- End Dummy Data -->
+              </div>
               <script type='text/javascript'>
               //<![CDATA[
                 function showPopularPosts(json) {
@@ -258,6 +275,38 @@
             <b:else/>
               <!-- Blog Post Content -->
               <div class='product-grid'>
+                <!-- Dummy Data for Local Preview -->
+                <div class='product-item'>
+                  <a href='#'>
+                    <img src='https://via.placeholder.com/250x250.png?text=DXN+Product+1'/>
+                    <h3>Dummy Product 1</h3>
+                    <div class='post-snippet'>
+                      This is a short description for the first dummy product.
+                    </div>
+                    <div class="price">$19.99</div>
+                  </a>
+                </div>
+                <div class='product-item'>
+                  <a href='#'>
+                    <img src='https://via.placeholder.com/250x250.png?text=DXN+Product+2'/>
+                    <h3>Dummy Product 2</h3>
+                    <div class='post-snippet'>
+                      This is a short description for the second dummy product.
+                    </div>
+                    <div class="price">$25.50</div>
+                  </a>
+                </div>
+                <div class='product-item'>
+                  <a href='#'>
+                    <img src='https://via.placeholder.com/250x250.png?text=DXN+Product+3'/>
+                    <h3>Dummy Product 3</h3>
+                    <div class='post-snippet'>
+                      This is a short description for the third dummy product.
+                    </div>
+                    <div class="price">$12.00</div>
+                  </a>
+                </div>
+                <!-- End Dummy Data -->
                 <b:loop values='data:posts' var='post'>
                   <div class='product-item'>
                     <a expr:href='data:post.url'>
