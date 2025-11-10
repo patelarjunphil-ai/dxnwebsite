@@ -1,6 +1,6 @@
 # DXN Cadiz Service Center Blogger Template
 
-This is a responsive and feature-rich Blogger template designed for the DXN Cadiz Service Center. It includes a powerful product search, a contact form, a Google Map, and sections for popular products and categories.
+This is a responsive and feature-rich Blogger template designed for the DXN Cadiz Service Center. It includes a powerful product search, a contact form, a Google Map, a real-time clock, and sections for popular products and categories.
 
 **Note on Dummy Data:** This template file contains hardcoded dummy product data. This allows you to open the `template.xml` file directly in a web browser for a visual preview of the layout. This dummy data will be replaced by your actual blog posts once you upload and apply the theme to your Blogger site.
 
@@ -13,7 +13,13 @@ This is a responsive and feature-rich Blogger template designed for the DXN Cadi
 5.  Select "Restore".
 6.  Upload the `template.xml` file.
 
-## How to Use
+## Features
+
+### Responsive Design
+The template is fully responsive and will adapt to any screen size, from mobile phones to desktop computers.
+
+### Real-Time Clock
+A real-time clock is displayed in the header, showing the current date and time.
 
 ### Recommended Image Sizes
 
@@ -46,22 +52,22 @@ The search bar includes an auto-suggest feature. As you type, a dropdown will ap
 
 ### Product Details Page
 
-When you click on a product, you will be taken to a dedicated product details page with a large image, full description, and price.
+When you click on a product, you will be taken to a dedicated product details page with a large image, full description, and price. The template automatically prevents the first image in your post from appearing twice on this page.
 
 ### Related Products
 
-At the bottom of each product details page, a "Related Products" section will automatically appear, showing other products from the same category.
+At the bottom of each product details page, a "Related Products" section will automatically appear, showing other products from the same category. If no related products are found, this section will be hidden.
 
 ### Popular Products
 
-To feature a product in the "Popular Products" section, simply add the label "Popular" to the product post. The template will automatically display the 5 most recent posts with this label.
+To feature a product in the "Popular Products" section, simply add the label "Popular" to the product post. The template will automatically display the 5 most recent posts with this label. This section only appears on the homepage.
 
 ### Creating a Product Post
 
 1.  Create a new post in Blogger.
 2.  The post title will be the product name.
-3.  The first image in the post will be used as the product image.
-4.  The post snippet will be displayed below the product name.
+3.  The first image in the post will be used as the main product image.
+4.  The post snippet will be displayed below the product name on the homepage grid.
 5.  To add a price, include a `div` element with the class "price" in the post body. For example:
     ```html
     <div class="price">$25.00</div>
