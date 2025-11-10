@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+  <meta charset='UTF-8'/>
+  <meta content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport'/>
+  <title><data:blog.pageTitle/></title>
+  <b:skin><style type='text/css'><![CDATA[
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    /* CSS for Header and Navigation */
+    #header-wrapper {
+      background-color: #ffffff; /* White */
+      padding: 20px 0;
+      border-bottom: 1px solid #eeeeee;
+    }
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo h1 {
+      color: #000000; /* Black */
+      margin: 0;
+      font-size: 24px;
+    }
+    #nav-wrapper {
+      background-color: #0033a0; /* Blue */
+    }
+    .main-nav {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .main-nav li a {
+      color: #ffffff; /* White */
+      padding: 15px 20px;
+      display: block;
+      text-decoration: none;
+    }
+    .main-nav li a:hover {
+      background-color: #d11313; /* Red */
+    }
+    .nav-toggle {
+      display: none;
+      cursor: pointer;
+      padding: 15px;
+      background-color: #0033a0; /* Blue */
+      color: #ffffff; /* White */
+    }
+    @media screen and (max-width: 768px) {
+      .main-nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+      }
+      .main-nav.active {
+        display: flex;
+      }
+      .nav-toggle {
+        display: block;
+      }
+    }
+    /* Search Form */
+    #search-wrapper {
+      padding: 20px 0;
+    }
+    .search-form {
+      display: flex;
+    }
+    .search-form input {
+      flex-grow: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .search-form button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #d11313; /* Red */
+      color: #ffffff; /* White */
+      cursor: pointer;
+    }
+    /* Popular Products */
+    #popular-products-wrapper {
+      padding: 20px 0;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .product-item {
+      border: 1px solid #eee;
+      padding: 15px;
+      text-align: center;
+    }
+    .product-item img {
+      max-width: 100%;
+      height: auto;
+    }
+    .product-item h3 {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    .product-item .price {
+      font-weight: bold;
+      color: #d11313; /* Red */
+    }
+    @media screen and (max-width: 1024px) {
+      .product-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+    }
+    /* Contact Form */
+    .contact-form-wrapper, .google-map-wrapper {
+      padding: 20px 0;
+    }
+    #contact-form input, #contact-form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+    }
+    #contact-form button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #0033a0; /* Blue */
+      color: #ffffff; /* White */
+      cursor: pointer;
+    }
+  ]]></style></b:skin>
+</head>
+<body>
+  <!-- Header -->
+  <header id='header-wrapper'>
+    <div class='container'>
+      <div class='header-content'>
+        <div class='logo'>
+          <a expr:href='data:blog.homepageUrl' itemprop='url' title='DXN Cadiz Service Center'>
+            <!-- Replace with DXN logo image if available -->
+            <h1 itemprop='name'><data:blog.title/></h1>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav id='nav-wrapper'>
+    <div class='container'>
+      <div class='nav-toggle'>Menu</div>
+      <ul class='main-nav'>
+        <li><a expr:href='data:blog.homepageUrl'>Home</a></li>
+        <li><a href='/p/about-us.html'>About Us</a></li>
+        <li><a href='/p/contact-us.html'>Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div id='main-wrapper'>
+    <div class='container'>
+      <!-- Search Form -->
+      <div id='search-wrapper'>
+        <form action='/search' class='search-form' method='get'>
+          <input name='q' placeholder='Search for products...' type='text'/>
+          <select name='category'>
+            <option value=''>All Categories</option>
+            <!-- Categories will be populated here by the user -->
+          </select>
+          <button type='submit'>Search</button>
+        </form>
+      </div>
+
+      <!-- Popular Products -->
+      <div id='popular-products-wrapper'>
+        <h2>Popular Products</h2>
+        <b:section class='main' id='popular-products' showaddelement='yes'>
+          <b:widget id='HTML1' locked='false' title='Popular Products' type='HTML'>
+            <b:includable id='main'>
+              <div id='popular-posts-container' class='product-grid'></div>
+              <script type='text/javascript'>
+              //<![CDATA[
+                function showPopularPosts(json) {
+                  var container = document.getElementById('popular-posts-container');
+                  var posts = json.feed.entry || [];
+                  for (var i = 0; i < posts.length; i++) {
+                    var post = posts[i];
+                    var postTitle = post.title.$t;
+                    var postUrl = '';
+                    for (var j = 0; j < post.link.length; j++) {
+                      if (post.link[j].rel == 'alternate') {
+                        postUrl = post.link[j].href;
+                        break;
+                      }
+                    }
+                    var postImage = post.media$thumbnail ? post.media$thumbnail.url.replace('/s72-c/', '/s400/') : 'https://via.placeholder.com/250x250';
+                    var postContent = post.content ? post.content.$t : '';
+                    var priceMatch = postContent.match(/<div class="price">(.*?)<\/div>/);
+                    var price = priceMatch ? priceMatch[1] : '';
+
+                    var item = document.createElement('div');
+                    item.className = 'product-item';
+                    item.innerHTML = '<a href="' + postUrl + '">' +
+                                     '<img src="' + postImage + '"/>' +
+                                     '<h3>' + postTitle + '</h3>' +
+                                     '<div class="price">' + price + '</div>' +
+                                     '</a>';
+                    container.appendChild(item);
+                  }
+                }
+              //]]>
+              </script>
+              <script expr:src='"/feeds/posts/default/-/Popular?alt=json-in-script&amp;callback=showPopularPosts&amp;max-results=5"'/>
+            </b:includable>
+          </b:widget>
+        </b:section>
+      </div>
+
+      <b:section class='main' id='main' showaddelement='no'>
+        <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
+          <b:includable id='main'>
+            <!-- Page Content -->
+            <b:if cond='data:blog.pageType == &quot;static_page&quot;'>
+              <div class='static-page'>
+                <h1 class='page-title'><data:blog.pageName/></h1>
+                <div class='page-content'>
+                  <data:post.body/>
+                </div>
+                <b:if cond='data:blog.url == data:blog.homepageUrl + &quot;p/contact-us.html&quot;'>
+                  <div class="contact-form-wrapper">
+                    <h3>Send us a Message</h3>
+                    <form id="contact-form">
+                      <input type="text" name="name" placeholder="Your Name" required="required" />
+                      <input type="email" name="email" placeholder="Your Email" required="required" />
+                      <textarea name="message" placeholder="Your Message" required="required"></textarea>
+                      <button type="submit">Send Message</button>
+                      <div id="contact-form-status"></div>
+                    </form>
+                  </div>
+                  <div class="google-map-wrapper">
+                    <h3>Our Location</h3>
+                    <!-- Google Map embed code will go here -->
+                  </div>
+                </b:if>
+              </div>
+            <b:else/>
+              <!-- Blog Post Content -->
+              <div class='product-grid'>
+                <b:loop values='data:posts' var='post'>
+                  <div class='product-item'>
+                    <a expr:href='data:post.url'>
+                      <b:if cond='data:post.firstImageUrl'>
+                        <img expr:src='resizeImage(data:post.firstImageUrl, 400, "1:1")'/>
+                      <b:else/>
+                        <img src='https://via.placeholder.com/250x250'/>
+                      </b:if>
+                      <h3><data:post.title/></h3>
+                      <div class='post-snippet'>
+                        <data:post.snippet/>
+                      </div>
+                      <!-- Price should be added in the post body -->
+                    </a>
+                  </div>
+                </b:loop>
+              </div>
+            </b:if>
+          </b:includable>
+        </b:widget>
+      </b:section>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer id='footer-wrapper'>
+    <div class='container'>
+      <p>&#169; <data:blog.title/>. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <b:section class='main' id='sidebar' showaddelement='yes'/>
+  <script type='text/javascript'>
+    // <![CDATA[
+    document.querySelector('.nav-toggle').addEventListener('click', function() {
+      document.querySelector('.main-nav').classList.toggle('active');
+    });
+
+    const searchForm = document.querySelector('.search-form');
+    searchForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const searchTerm = this.q.value;
+      const category = this.category.value;
+      let searchUrl = '/search';
+      if (category) {
+        searchUrl += '/label/' + category;
+      }
+      searchUrl += '?q=' + searchTerm;
+      window.location.href = searchUrl;
+    });
+
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData(form);
+        const action = 'YOUR_FORMSPREE_ENDPOINT'; // User needs to replace this
+        const status = document.getElementById('contact-form-status');
+
+        fetch(action, {
+          method: 'POST',
+          body: data,
+          headers: {
+            'Accept': 'application/json'
+          }
+        }).then(response => {
+          if (response.ok) {
+            status.innerHTML = "Thanks for your submission!";
+            form.reset();
+          } else {
+            response.json().then(data => {
+              if (Object.hasOwn(data, 'errors')) {
+                status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+              } else {
+                status.innerHTML = "Oops! There was a problem submitting your form";
+              }
+            })
+          }
+        }).catch(error => {
+          status.innerHTML = "Oops! There was a problem submitting your form";
+        });
+      });
+    }
+    // ]]>
+  </script>
+
+  <!-- Facebook Messenger Chat Plugin -->
+  <div id="fb-root"></div>
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        xfbml            : true,
+        version          : 'v12.0'
+      });
+    };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+  <div class="fb-customerchat"
+    attribution="setup_tool"
+    page_id="YOUR_FACEBOOK_PAGE_ID">
+  </div>
+</body>
+</html>
