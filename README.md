@@ -38,15 +38,19 @@ To edit the navigation links:
 
 ### Product Categories
 
-To add product categories to the search form:
+This section automatically displays all the labels (categories) you use on your posts. Clicking a category button will take you to a page showing all products in that category.
 
-1.  Go to "Theme" > "Edit HTML".
-2.  Find the `<select name='category'>` element inside the search form.
-3.  Add new `<option>` tags for each category. The `value` of the option should be the same as the label you use on your product posts.
-    ```html
-    <option value='Coffee'>Coffee</option>
-    <option value='Supplements'>Supplements</option>
-    ```
+### Search Auto-Suggest
+
+The search bar includes an auto-suggest feature. As you type, a dropdown will appear with product suggestions, including thumbnails, to help you find what you're looking for quickly.
+
+### Product Details Page
+
+When you click on a product, you will be taken to a dedicated product details page with a large image, full description, and price.
+
+### Related Products
+
+At the bottom of each product details page, a "Related Products" section will automatically appear, showing other products from the same category.
 
 ### Popular Products
 

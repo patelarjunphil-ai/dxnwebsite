@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html b:version='2' class='v2' expr:dir='data:blog.languageDirection' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<html b:responsive='true' class='v2' expr:dir='data:blog.languageDirection' mobile='yes' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
 <head>
   <meta charset='UTF-8'/>
   <meta content='width=device-width, initial-scale=1, shrink-to-fit-no' name='viewport'/>
@@ -85,6 +85,43 @@
     /* Search Form */
     #search-wrapper {
       padding: 20px 0;
+      position: relative;
+    }
+    #search-suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      display: none;
+      z-index: 1000;
+    }
+    .suggestion-item {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      text-decoration: none;
+      color: #333;
+      border-bottom: 1px solid #eee;
+    }
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+    .suggestion-item:hover {
+      background-color: #f5f5f5;
+    }
+    .suggestion-thumb {
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+      object-fit: cover;
+    }
+    .suggestion-title {
+      font-weight: 500;
     }
     .search-form {
       display: flex;
@@ -117,6 +154,39 @@
     .search-form button:hover {
       background-color: #a80f0f; /* Darker Red */
     }
+    /* Categories Section */
+    #categories-wrapper {
+      padding: 20px 0;
+    }
+    #categories-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .category-button {
+      background-color: #eee;
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .category-button:hover {
+      background-color: #0033a0; /* Blue */
+      color: #fff;
+    }
+    @media screen and (max-width: 600px) {
+      .search-form {
+        flex-wrap: wrap;
+      }
+      .search-form input, .search-form select {
+        flex-basis: 100%;
+      }
+      .search-form button {
+        flex-basis: 100%;
+      }
+    }
     /* Popular Products */
     #popular-products-wrapper {
       padding: 20px 0;
@@ -144,8 +214,18 @@
       height: auto;
     }
     .product-item h3 {
-      font-size: 18px;
+      font-size: 1.1em;
+      font-weight: 600;
       margin: 10px 0;
+      word-wrap: break-word;
+    }
+    .post-snippet {
+      font-size: 0.9em;
+      color: #666;
+    }
+    /* Hide price in grid view, as it's part of the body */
+    .product-grid .product-item .price {
+      display: none;
     }
     .product-item .price {
       font-weight: bold;
@@ -188,6 +268,52 @@
     }
     #contact-form button:hover {
       background-color: #00226b; /* Darker Blue */
+    }
+    /* Related Products */
+    #related-products-container {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    #related-products-container h3 {
+      font-size: 1.8em;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    /* Product Details Page */
+    .product-details-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+    .product-image-column {
+      flex: 1 1 400px;
+    }
+    .product-main-image {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .product-info-column {
+      flex: 1 1 500px;
+    }
+    .product-title {
+      font-size: 2.5em;
+      font-weight: 600;
+      margin: 0 0 15px 0;
+      line-height: 1.2;
+    }
+    .product-full-description {
+      font-size: 1.1em;
+    }
+    .product-full-description .price {
+      font-size: 2em;
+      font-weight: 700;
+      color: #d11313; /* Red */
+      margin: 20px 0;
     }
   ]]></b:skin>
 </head>
@@ -232,13 +358,33 @@
       <!-- Search Form -->
       <div id='search-wrapper'>
         <form action='/search' class='search-form' method='get'>
-          <input name='q' placeholder='Search for products...' type='text'/>
-          <select name='category'>
-            <option value=''>All Categories</option>
-            <!-- Categories will be populated here by the user -->
-          </select>
+          <input autocomplete='off' id='search-input' name='q' placeholder='Search for products...' type='text'/>
           <button type='submit'>Search</button>
         </form>
+        <div id='search-suggestions'></div>
+      </div>
+
+      <!-- Product Categories -->
+      <div id='categories-wrapper'>
+        <h2>Product Categories</h2>
+        <div id='categories-container'></div>
+        <script type='text/javascript'>
+        //<![CDATA[
+          function showCategories(json) {
+            var container = document.getElementById('categories-container');
+            var categories = json.feed.category || [];
+            categories.forEach(function(category) {
+              var term = category.term;
+              var categoryLink = document.createElement('a');
+              categoryLink.href = '/search/label/' + encodeURIComponent(term);
+              categoryLink.className = 'category-button';
+              categoryLink.textContent = term;
+              container.appendChild(categoryLink);
+            });
+          }
+        //]]>
+        </script>
+        <script src='/feeds/posts/default?alt=json-in-script&amp;callback=showCategories&amp;max-results=0'/>
       </div>
 
       <!-- Popular Products -->
@@ -332,11 +478,42 @@
                 </b:if>
               </div>
             <b:else/>
-              <!-- Blog Post Content -->
-              <div class='product-grid'>
-                <!-- Dummy Data for Local Preview -->
-                <b:if cond='data:posts.empty'>
-                  <div class='product-item'>
+              <!-- Single Product Page (Item View) -->
+              <b:if cond='data:blog.pageType == &quot;item&quot;'>
+                <b:loop values='data:posts' var='post'>
+                  <div class='product-details-container'>
+                    <div class='product-image-column'>
+                      <b:if cond='data:post.firstImageUrl'>
+                        <img class='product-main-image' expr:src='resizeImage(data:post.firstImageUrl, 800)'/>
+                      <b:else/>
+                        <img class='product-main-image' src='https://via.placeholder.com/800x800'/>
+                      </b:if>
+                    </div>
+                    <div class='product-info-column'>
+                      <h1 class='product-title'><data:post.title/></h1>
+                      <div class='product-full-description'>
+                        <data:post.body/>
+                      </div>
+                      <!-- Price should be in the post body, e.g., <div class="price">$19.99</div> -->
+                    </div>
+                  </div>
+                </b:loop>
+                <div id='related-products-container'>
+                  <h3>Related Products</h3>
+                  <div class='product-grid' id='related-products-grid'></div>
+                  <script type='text/javascript'>
+                  //<![CDATA[
+                    var postLabels = [<b:loop values='data:posts' var='post'><b:loop values='data:post.labels' var='label'>&quot;<data:label.name/>&quot;<b:if cond='data:label.isLast != &quot;true&quot;'>,</b:if></b:loop></b:loop>];
+                    var postUrl = &quot;<data:blog.url/>&quot;;
+                  //]]>
+                  </script>
+                </div>
+              <b:else/>
+                <!-- Blog Post Content (Homepage Grid) -->
+                <div class='product-grid'>
+                  <!-- Dummy Data for Local Preview -->
+                  <b:if cond='data:posts.empty'>
+                    <div class='product-item'>
                     <a href='#'>
                       <img src='https://via.placeholder.com/250x250.png?text=DXN+Product+1'/>
                       <h3>Dummy Product 1</h3>
@@ -378,7 +555,7 @@
                       </b:if>
                       <h3><data:post.title/></h3>
                       <div class='post-snippet'>
-                        <data:post.snippet/>
+                        <b:eval expr='snippet(data:post.body, {length: 100, links: false})'/>
                       </div>
                       <!-- Price should be added in the post body -->
                     </a>
@@ -452,8 +629,81 @@
         });
       });
     }
+
+    function showRelatedPosts(json) {
+      var container = document.getElementById('related-products-grid');
+      var posts = json.feed.entry || [];
+      for (var i = 0; i < posts.length; i++) {
+        var post = posts[i];
+        if (post.link.find(l => l.rel == 'alternate').href == postUrl) continue; // Skip current post
+        var postTitle = post.title.$t;
+        var postUrl = post.link.find(l => l.rel == 'alternate').href;
+        var postImage = post.media$thumbnail ? post.media$thumbnail.url.replace('/s72-c/', '/s400/') : 'https://via.placeholder.com/250x250';
+
+        var item = document.createElement('div');
+        item.className = 'product-item';
+        item.innerHTML = '<a href="' + postUrl + '">' +
+                         '<img src="' + postImage + '"/>' +
+                         '<h3>' + postTitle + '</h3>' +
+                         '</a>';
+        container.appendChild(item);
+      }
+    }
+
+    if (document.getElementById('related-products-container')) {
+      var category = postLabels[0];
+      if(category) {
+        var script = document.createElement('script');
+        script.src = '/feeds/posts/default/-/' + category + '?alt=json-in-script&callback=showRelatedPosts&max-results=4';
+        document.body.appendChild(script);
+      }
+    }
+
+    /* Search Auto-Suggest Logic */
+    let allPostsCache = [];
+    function processAllPostsForSearch(json) {
+      allPostsCache = json.feed.entry || [];
+    }
+
+    const searchInput = document.getElementById('search-input');
+    const suggestionsContainer = document.getElementById('search-suggestions');
+
+    searchInput.addEventListener('keyup', function() {
+      const query = this.value.toLowerCase();
+      if (query.length < 3) {
+        suggestionsContainer.style.display = 'none';
+        return;
+      }
+
+      const filtered = allPostsCache.filter(post => post.title.$t.toLowerCase().includes(query));
+
+      suggestionsContainer.innerHTML = '';
+      if (filtered.length > 0) {
+        filtered.slice(0, 5).forEach(post => {
+          const title = post.title.$t;
+          const url = post.link.find(link => link.rel === 'alternate').href;
+          const thumb = post.media$thumbnail ? post.media$thumbnail.url.replace('/s72-c/', '/s100-c/') : 'https://via.placeholder.com/50x50';
+
+          const item = `<a class="suggestion-item" href="${url}">
+                          <img class="suggestion-thumb" src="${thumb}"/>
+                          <span class="suggestion-title">${title}</span>
+                        </a>`;
+          suggestionsContainer.innerHTML += item;
+        });
+        suggestionsContainer.style.display = 'block';
+      } else {
+        suggestionsContainer.style.display = 'none';
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      if (!document.getElementById('search-wrapper').contains(e.target)) {
+        suggestionsContainer.style.display = 'none';
+      }
+    });
     // ]]>
   </script>
+  <script src='/feeds/posts/default?alt=json-in-script&amp;callback=processAllPostsForSearch&amp;max-results=9999'/>
 
   <!-- Facebook Messenger Chat Plugin -->
   <div id="fb-root"></div>
@@ -477,5 +727,6 @@
     attribution="setup_tool"
     page_id="YOUR_FACEBOOK_PAGE_ID">
   </div>
+  <script src='/feeds/posts/default?alt=json-in-script&amp;callback=processAllPostsForSearch&amp;max-results=9999'/>
 </body>
 </html>
