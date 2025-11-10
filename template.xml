@@ -194,16 +194,24 @@
 <body>
   <!-- Header -->
   <header id='header-wrapper'>
-    <div class='container'>
-      <div class='header-content'>
-        <div class='logo'>
-          <a expr:href='data:blog.homepageUrl' itemprop='url' title='DXN Cadiz Service Center'>
-            <!-- Replace with DXN logo image if available -->
-            <h1 itemprop='name'><data:blog.title/></h1>
-          </a>
-        </div>
-      </div>
-    </div>
+    <b:section class='header' id='header' maxwidgets='1' showaddelement='no'>
+      <b:widget id='Header1' locked='true' title='DXN Cadiz Service Center (Header)' type='Header'>
+        <b:includable id='main'>
+          <div class='container'>
+            <div class='header-content'>
+              <div class='logo'>
+                <b:if cond='data:imagePlacement == &quot;REPLACE&quot;'>
+                  <a expr:href='data:blog.homepageUrl'><img expr:alt='data:title' expr:height='data:height' expr:id='data:widget.instanceId + &quot;_headerimg&quot;' expr:src='data:sourceUrl' expr:width='data:width' style='display: block'/></a>
+                <b:else/>
+                  <a expr:href='data:blog.homepageUrl'><h1 itemprop='name'><data:blog.title/></h1></a>
+                  <p><data:description/></p>
+                </b:if>
+              </div>
+            </div>
+          </div>
+        </b:includable>
+      </b:widget>
+    </b:section>
   </header>
 
   <!-- Navigation -->
