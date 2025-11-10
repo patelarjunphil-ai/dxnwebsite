@@ -75,7 +75,7 @@
       position: relative;
     }
     .nav-toggle::after {
-      content: '\\25BC';
+      content: '▼';
       font-size: 12px;
       margin-left: 8px;
     }
@@ -382,6 +382,7 @@
   <div id='main-wrapper'>
     <div class='container'>
       <!-- Search Form -->
+      <b:if cond='data:blog.pageType != "item" and data:blog.pageType != "static_page"'>
       <div id='search-wrapper'>
         <form action='/search' class='search-form' method='get'>
           <input autocomplete='off' id='search-input' name='q' placeholder='Search for products...' type='text'/>
@@ -389,6 +390,7 @@
         </form>
         <div id='search-suggestions'></div>
       </div>
+      </b:if>
 
       <!-- Product Categories -->
       <div id='categories-wrapper'>
