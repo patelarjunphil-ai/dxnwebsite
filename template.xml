@@ -563,6 +563,7 @@
                 </b:loop>
               </div>
             </b:if>
+          </b:if>
           </b:includable>
         </b:widget>
       </b:section>
@@ -587,12 +588,7 @@
     searchForm.addEventListener('submit', function(e) {
       e.preventDefault();
       const searchTerm = this.q.value;
-      const category = this.category.value;
-      let searchUrl = '/search';
-      if (category) {
-        searchUrl += '/label/' + category;
-      }
-      searchUrl += '?q=' + searchTerm;
+      let searchUrl = '/search?q=' + encodeURIComponent(searchTerm);
       window.location.href = searchUrl;
     });
 
@@ -727,6 +723,5 @@
     attribution="setup_tool"
     page_id="YOUR_FACEBOOK_PAGE_ID">
   </div>
-  <script src='/feeds/posts/default?alt=json-in-script&amp;callback=processAllPostsForSearch&amp;max-results=9999'/>
 </body>
 </html>
