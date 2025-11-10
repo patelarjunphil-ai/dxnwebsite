@@ -15,6 +15,10 @@ This is a responsive and feature-rich Blogger template designed for the DXN Cadi
 
 ## How to Use
 
+### Recommended Image Sizes
+
+For the best results on both desktop and mobile, it is highly recommended that you upload **square (1:1 aspect ratio) images** for your products, with a resolution of at least **800x800 pixels**. This will ensure your product grid looks clean, professional, and displays high-quality images on all devices.
+
 ### Logo
 
 To use an image logo instead of the blog title:

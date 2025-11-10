@@ -269,6 +269,7 @@
               //<![CDATA[
                 function showPopularPosts(json) {
                   var container = document.getElementById('popular-posts-container');
+                  container.innerHTML = ''; // Clear dummy data
                   var posts = json.feed.entry || [];
                   for (var i = 0; i < posts.length; i++) {
                     var post = posts[i];
@@ -334,36 +335,38 @@
               <!-- Blog Post Content -->
               <div class='product-grid'>
                 <!-- Dummy Data for Local Preview -->
-                <div class='product-item'>
-                  <a href='#'>
-                    <img src='https://via.placeholder.com/250x250.png?text=DXN+Product+1'/>
-                    <h3>Dummy Product 1</h3>
-                    <div class='post-snippet'>
-                      This is a short description for the first dummy product.
-                    </div>
-                    <div class="price">$19.99</div>
-                  </a>
-                </div>
-                <div class='product-item'>
-                  <a href='#'>
-                    <img src='https://via.placeholder.com/250x250.png?text=DXN+Product+2'/>
-                    <h3>Dummy Product 2</h3>
-                    <div class='post-snippet'>
-                      This is a short description for the second dummy product.
-                    </div>
-                    <div class="price">$25.50</div>
-                  </a>
-                </div>
-                <div class='product-item'>
-                  <a href='#'>
-                    <img src='https://via.placeholder.com/250x250.png?text=DXN+Product+3'/>
-                    <h3>Dummy Product 3</h3>
-                    <div class='post-snippet'>
-                      This is a short description for the third dummy product.
-                    </div>
-                    <div class="price">$12.00</div>
-                  </a>
-                </div>
+                <b:if cond='data:posts.empty'>
+                  <div class='product-item'>
+                    <a href='#'>
+                      <img src='https://via.placeholder.com/250x250.png?text=DXN+Product+1'/>
+                      <h3>Dummy Product 1</h3>
+                      <div class='post-snippet'>
+                        This is a short description for the first dummy product.
+                      </div>
+                      <div class="price">$19.99</div>
+                    </a>
+                  </div>
+                  <div class='product-item'>
+                    <a href='#'>
+                      <img src='https://via.placeholder.com/250x250.png?text=DXN+Product+2'/>
+                      <h3>Dummy Product 2</h3>
+                      <div class='post-snippet'>
+                        This is a short description for the second dummy product.
+                      </div>
+                      <div class="price">$25.50</div>
+                    </a>
+                  </div>
+                  <div class='product-item'>
+                    <a href='#'>
+                      <img src='https://via.placeholder.com/250x250.png?text=DXN+Product+3'/>
+                      <h3>Dummy Product 3</h3>
+                      <div class='post-snippet'>
+                        This is a short description for the third dummy product.
+                      </div>
+                      <div class="price">$12.00</div>
+                    </a>
+                  </div>
+                </b:if>
                 <!-- End Dummy Data -->
                 <b:loop values='data:posts' var='post'>
                   <div class='product-item'>
